@@ -16,4 +16,5 @@ public class Product {
     private String name;
     private Double price;
     private LocalDate createAt;
+    private int port;
 }

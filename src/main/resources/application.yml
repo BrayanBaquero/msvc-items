@@ -1,5 +1,13 @@
 spring:
   application:
     name: "msvc-items"
+  cloud:
+    discovery:
+      client:
+        simple:
+          instances:
+            msvc-products:
+              - uri: http://localhost:8004
+              - uri: http://localhost:8005
 server:
   port: 8006
