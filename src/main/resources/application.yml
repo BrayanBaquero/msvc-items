@@ -1,3 +1,5 @@
+server:
+  port: 8006
 spring:
   application:
     name: "msvc-items"
@@ -9,5 +11,7 @@ spring:
             msvc-products:
               - uri: http://localhost:8004
               - uri: http://localhost:8005
-server:
-  port: 8006
+config:
+  baseurl:
+    endpoint:
+      msvc-products: http://msvc-products
