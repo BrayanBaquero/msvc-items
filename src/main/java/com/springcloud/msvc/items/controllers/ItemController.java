@@ -21,7 +21,7 @@ public class ItemController {
 
     private final ItemService itemService;
 
-    public ItemController(@Qualifier("itemServiceWebClient") ItemService itemService) {
+    public ItemController(@Qualifier("itemServiceFeign") ItemService itemService) {
         this.itemService = itemService;
     }
 
