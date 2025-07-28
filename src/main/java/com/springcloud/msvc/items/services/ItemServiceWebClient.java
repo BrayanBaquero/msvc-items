@@ -21,7 +21,7 @@ public class ItemServiceWebClient implements  ItemService{
     public List<Item> findAll() {
         return client.build()
                 .get()
-                .uri("/api/products")
+           //     .uri("/api/products")
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToFlux(Product.class)

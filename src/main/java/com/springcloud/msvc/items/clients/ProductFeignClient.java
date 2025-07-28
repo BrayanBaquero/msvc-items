@@ -10,9 +10,9 @@ import java.util.List;
 
 @FeignClient(name = "msvc-products")
 public interface ProductFeignClient {
-    @GetMapping(path = "/api/products")
+    @GetMapping
     List<Product> findAll();
 
-    @GetMapping("/api/products/{id}")
+    @GetMapping("/{id}")
     Product details(@PathVariable Long id);
 }
