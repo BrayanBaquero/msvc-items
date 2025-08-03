@@ -4,6 +4,7 @@ import com.springcloud.msvc.items.models.Item;
 import com.springcloud.msvc.items.models.Product;
 import com.springcloud.msvc.items.services.ItemService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 public class ItemController {
@@ -67,6 +69,18 @@ public class ItemController {
         return ResponseEntity.status(404).body(Collections.singletonMap("message","No existe el producto en el ms product"));
     }
 
+    @TimeLimiter(name = "items",fallbackMethod = "getFallBackMetohodProduct2")
+    @GetMapping("/details2/{id}")
+    public CompletableFuture<?> details3(@PathVariable Long id){
+        return CompletableFuture.supplyAsync(()->{
+            Optional<Item> item =   itemService.findById(id);
+            if(item.isPresent())
+                return ResponseEntity.ok(item.get());
+            return ResponseEntity.status(404).body(Collections.singletonMap("message","No existe el producto en el ms product"));
+        });
+
+    }
+
     public ResponseEntity<?> getFallBackMetohodProduct(Throwable e){
         logger.error(e.getMessage());
         Product product = Product.builder()
@@ -76,5 +90,18 @@ public class ItemController {
                 .price(500.00)
                 .build();
         return ResponseEntity.ok(new Item(product,5));
+    }
+
+    public CompletableFuture<?> getFallBackMetohodProduct2(Throwable e){
+        return CompletableFuture.supplyAsync(()->{
+            logger.error(e.getMessage());
+            Product product = Product.builder()
+                    .createdAt(LocalDate.now())
+                    .id(1L)
+                    .name("Camara sony")
+                    .price(500.00)
+                    .build();
+            return ResponseEntity.ok(new Item(product,5));
+        });
     }
 }
