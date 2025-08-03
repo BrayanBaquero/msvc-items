@@ -69,7 +69,8 @@ public class ItemController {
         return ResponseEntity.status(404).body(Collections.singletonMap("message","No existe el producto en el ms product"));
     }
 
-    @TimeLimiter(name = "items",fallbackMethod = "getFallBackMetohodProduct2")
+   @CircuitBreaker(name = "items",fallbackMethod = "getFallBackMetohodProduct2")
+    @TimeLimiter(name = "items"/*,fallbackMethod = "getFallBackMetohodProduct2"*/)
     @GetMapping("/details2/{id}")
     public CompletableFuture<?> details3(@PathVariable Long id){
         return CompletableFuture.supplyAsync(()->{
