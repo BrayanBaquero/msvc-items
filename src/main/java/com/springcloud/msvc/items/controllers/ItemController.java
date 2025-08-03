@@ -3,6 +3,7 @@ package com.springcloud.msvc.items.controllers;
 import com.springcloud.msvc.items.models.Item;
 import com.springcloud.msvc.items.models.Product;
 import com.springcloud.msvc.items.services.ItemService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
@@ -55,5 +56,25 @@ public class ItemController {
         if(item.isPresent())
             return ResponseEntity.ok(item.get());
         return ResponseEntity.status(404).body(Collections.singletonMap("message","No existe el producto en el ms product"));
+    }
+
+    @CircuitBreaker(name = "items",fallbackMethod = "getFallBackMetohodProduct")
+    @GetMapping("/details/{id}")
+    public ResponseEntity<?> details2(@PathVariable Long id){
+        Optional<Item> item =   itemService.findById(id);
+        if(item.isPresent())
+            return ResponseEntity.ok(item.get());
+        return ResponseEntity.status(404).body(Collections.singletonMap("message","No existe el producto en el ms product"));
+    }
+
+    public ResponseEntity<?> getFallBackMetohodProduct(Throwable e){
+        logger.error(e.getMessage());
+        Product product = Product.builder()
+                .createdAt(LocalDate.now())
+                .id(1L)
+                .name("Camara sony")
+                .price(500.00)
+                .build();
+        return ResponseEntity.ok(new Item(product,5));
     }
 }
