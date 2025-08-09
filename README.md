@@ -1,0 +1,1 @@
+Actuator refresh endpoint : http://ip:port/actuator/refresh /

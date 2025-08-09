@@ -6,4 +6,9 @@ spring:
       uri: http://localhost:8888
   profiles:
     active:
-      - prod
+      - dev
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
