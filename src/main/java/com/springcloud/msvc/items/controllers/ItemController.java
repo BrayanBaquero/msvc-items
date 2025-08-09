@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,6 +32,8 @@ public class ItemController {
     @Value("${configuration.texto}")
     private String text;
 
+    @Autowired
+    private Environment env;
     public ItemController(@Qualifier("itemServiceFeign") ItemService itemService,
                           CircuitBreakerFactory breakerFactory) {
         this.itemService = itemService;
@@ -42,6 +45,13 @@ public class ItemController {
         Map<String, String> json = new HashMap<>();
         json.put("text", text);
         json.put("port", port);
+
+        if(env.getActiveProfiles().length>0 && env.getActiveProfiles()[0].equals("dev")) {
+            json.put("autor.nombre", env.getProperty("configuration.autor.nombre"));
+            json.put("autor.email", env.getProperty("configuration.autor.email"));
+        } else {
+            json.put("profile", "default");
+        }
         logger.info(port);
         logger.info(text);
         return ResponseEntity.ok(json);
