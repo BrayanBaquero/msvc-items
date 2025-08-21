@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.client.circuitbreaker.CircuitBreakerFactory;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +37,7 @@ public class ItemController {
 
     @Autowired
     private Environment env;
+    //itemServiceFeign , itemServiceWebClient
     public ItemController(@Qualifier("itemServiceFeign") ItemService itemService,
                           CircuitBreakerFactory breakerFactory) {
         this.itemService = itemService;
@@ -130,4 +132,21 @@ public class ItemController {
             return ResponseEntity.ok(new Item(product,5));
         });
     }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Product create(@RequestBody Product product){
+        return itemService.save(product);
+    }
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Product update(@RequestBody Product product, @PathVariable Long id){
+        return itemService.update(product,id);
+    }
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable Long id){
+        itemService.delete(id);
+    }
+
 }
