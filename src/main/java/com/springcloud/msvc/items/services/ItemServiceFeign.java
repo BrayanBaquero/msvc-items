@@ -1,11 +1,9 @@
 package com.springcloud.msvc.items.services;
 
+import com.libs.msvc.commons.entities.Product;
 import com.springcloud.msvc.items.clients.ProductFeignClient;
 import com.springcloud.msvc.items.models.Item;
-import com.springcloud.msvc.items.models.Product;
-import feign.FeignException;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

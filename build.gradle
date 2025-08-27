@@ -41,6 +41,9 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-bootstrap'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+//	implementation 'com.libs.msvc.commons:libs-msvc-commons:0.0.1-SNAPSHOT'
+	implementation files('../libs-msvc-commons/build/libs/libs-msvc-commons-0.0.1-SNAPSHOT-plain.jar')
+
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'

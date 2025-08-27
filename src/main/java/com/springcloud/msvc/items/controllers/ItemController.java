@@ -1,13 +1,10 @@
 package com.springcloud.msvc.items.controllers;
 
+import com.libs.msvc.commons.entities.Product;
 import com.springcloud.msvc.items.models.Item;
-import com.springcloud.msvc.items.models.Product;
 import com.springcloud.msvc.items.services.ItemService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.timelimiter.annotation.TimeLimiter;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

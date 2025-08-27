@@ -1,8 +1,7 @@
 package com.springcloud.msvc.items.clients;
 
-import com.springcloud.msvc.items.models.Product;
+import com.libs.msvc.commons.entities.Product;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

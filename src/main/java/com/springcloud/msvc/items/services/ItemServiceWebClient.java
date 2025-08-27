@@ -1,10 +1,8 @@
 package com.springcloud.msvc.items.services;
 
+import com.libs.msvc.commons.entities.Product;
 import com.springcloud.msvc.items.models.Item;
-import com.springcloud.msvc.items.models.Product;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
